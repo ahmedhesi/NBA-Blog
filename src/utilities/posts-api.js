@@ -6,3 +6,7 @@ export async function create(post) {
   return sendRequest(BASE_URL, 'POST', post);
 }
 
+export async function getNotes() {
+    return sendRequest(BASE_URL);
+}
+
