@@ -1,0 +1,15 @@
+post {
+    width: 80%;
+    background-color: red;
+}
+
+postForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    
+}
+
