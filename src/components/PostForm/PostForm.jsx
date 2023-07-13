@@ -2,7 +2,7 @@ import {useState} from "react";
 import '../PostForm/PostForm.css';
 import * as postsApi from "../../utilities/posts-api"
 
-export default function PostForm({user}){
+export default function PostForm({user, handleAddPost}){
     const [post,setPost] = useState({content:""})
     
     function handleChange(evt){
@@ -12,6 +12,7 @@ export default function PostForm({user}){
     async function handleSubmit(evt){
         evt.preventDefault();
         const newPost= await postsApi.create(post)
+        handleAddPost(newPost)
         setPost({content:""})
     }
         return(

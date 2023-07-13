@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersCtrl = require('../../controllers/api/users');
+const ensureLoggedIn = require('../../config/ensureLoggedIn');
 
 // All paths start with '/api/users'
 
@@ -8,5 +9,7 @@ const usersCtrl = require('../../controllers/api/users');
 router.post('/', usersCtrl.create);
 // POST /api/users/login
 router.post('/login', usersCtrl.login);
+
+// router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken);
 
 module.exports = router;

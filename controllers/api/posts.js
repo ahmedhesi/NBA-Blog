@@ -14,11 +14,10 @@ async function create(req, res) {
     const post= await Post.create(req.body)
     res.json(post)
   } catch (err) {
-    console.log(err)
   }
 }
 
 async function index(req, res) {
-    const notes = await Post.find({ user:req.user._id })
-    res.json(notes)
+    const posts = await Post.find({ }).populate("user").exec()
+    res.json(posts)
 }
