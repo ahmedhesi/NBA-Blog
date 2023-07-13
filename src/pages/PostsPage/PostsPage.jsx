@@ -1,22 +1,9 @@
 import PostForm from "../../components/PostForm/PostForm";
 import {useState, useEffect} from "react"
 import PostItem from "../../components/PostItem/PostItem";
-import * as postsAPI from "../../utilities/posts-api"
 
-export default function PostPage({user}){
-    const [posts, setPosts] = useState ([])
 
-    useEffect(() => {
-        async function getAllPosts() {
-        const posts = await postsAPI.getPosts()
-        setPosts(posts)
-        }
-        getAllPosts()
-    },[])
-    console.log(posts)
-    function handleAddPost(post) {
-        setPosts([...posts, post])
-    }
+export default function PostPage({user, posts, handleAddPost}){
 
     return(
         <div>
