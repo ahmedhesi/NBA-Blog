@@ -9,6 +9,9 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn');
 router.post('/', ensureLoggedIn, postsCtrl.create);
 
 router.get('/', ensureLoggedIn, postsCtrl.index);
+router.get('/myblogs', ensureLoggedIn, postsCtrl.getMyBlog);
+
+
 
 // POST /api/users/login
 // router.post('/login', usersCtrl.login);

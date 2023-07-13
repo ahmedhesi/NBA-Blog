@@ -10,14 +10,9 @@ export async function getPosts() {
     return sendRequest(BASE_URL);
 }
 
-// import sendRequest from "./send-request";
-// const BASE_URL = '/api/posts';
+export async function getMyPosts() {
+    return sendRequest(`${BASE_URL}/myblogs`)
+}
 
-// export async function getPosts() {
-//     return sendRequest(BASE_URL);
-// }
 
-// export async function addPost(formData) {
-//     return sendRequest(BASE_URL, "POST", {text:formData});
-// }
 
