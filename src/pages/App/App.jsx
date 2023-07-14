@@ -36,7 +36,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/posts" element={<PostsPage user={user} posts={posts} handleAddPost={handleAddPost}  />} />
               <Route path="/posts/myblogs" element={<MyPostsPage user={user} posts={posts} handleAddPost={handleAddPost}  />} />
-              <Route path="/posts/:id" element={<PostDetail posts={posts}/>} />
+              <Route path="/posts/:id" element={<PostDetail posts={posts} setPosts={setPosts} />} />
             </Routes>
           </>
           :

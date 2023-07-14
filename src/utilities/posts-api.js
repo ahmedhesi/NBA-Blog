@@ -11,8 +11,11 @@ export async function getPosts() {
 }
 
 export async function getMyPosts() {
+    console.log("post")
     return sendRequest(`${BASE_URL}/myblogs`)
 }
 
-
+export async function getPost(id) {
+    return sendRequest(`${BASE_URL}/${id}`)
+}
 
