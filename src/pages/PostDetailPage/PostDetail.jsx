@@ -35,10 +35,11 @@ export default function PostDetail({ posts, setPosts }) {
   }
   
   async function handleUpdatePost() {
-    await postApi.updatePost(post._id, updatedPost);
+    await postApi.updatePost(id, updatedPost);
     setPost(updatedPost);
     setEditMode(false);
   }
+
   
   console.log(post);
   
