@@ -11,6 +11,7 @@ router.post('/', ensureLoggedIn, postsCtrl.create);
 router.get('/', ensureLoggedIn, postsCtrl.index);
 router.get('/myblogs', ensureLoggedIn, postsCtrl.getMyBlog);
 router.get('/:id', ensureLoggedIn, postsCtrl.show)
+router.put('/:id', ensureLoggedIn, postsCtrl.updatePost);
 
 
 // POST /api/users/login

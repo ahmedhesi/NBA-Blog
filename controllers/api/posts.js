@@ -5,6 +5,7 @@ module.exports = {
   index,
   getMyBlog,
   show,
+  updatePost,
 };
 
 async function create(req, res) {
@@ -37,6 +38,23 @@ async function show(req, res) {
     }
 
   }
+
+  async function updatePost(req, res) {
+    try {
+      const updatedPost = await Post.findOneAndUpdate(
+        {_id: req.params.id, userRecommending: req.user._id},
+        // update object with updated properties
+        req.body,
+        // options object {new: true} returns updated doc
+        {new: true}
+      );
+      return res.redirect(`/posts/${updatedPost._id}`);
+    } catch (e) {
+      console.log(e.message);
+      return res.redirect('/posts');
+    }
+  }
+
   
 
 

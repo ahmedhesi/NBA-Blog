@@ -19,3 +19,6 @@ export async function getPost(id) {
     return sendRequest(`${BASE_URL}/${id}`)
 }
 
+export async function updatePost(postId, postData) {
+    return sendRequest(`${BASE_URL}/${postId}`, 'PUT', postData);
+  }

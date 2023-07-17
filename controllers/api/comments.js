@@ -2,6 +2,7 @@ const Post = require('../../models/post');
 
 module.exports = {
   create,
+  deleteComment,
 };
 
 async function create(req, res) {
@@ -19,3 +20,24 @@ async function create(req, res) {
   }
 }
 
+    
+    
+  async function deleteComment(req, res) {
+    console.log("hello")
+    // Note the cool "dot" syntax to query on the property of a subdoc
+    const post = await Post.findOne({'comments._id': req.params.id, 'comments.userId': req.user._id});
+    if (!post) return
+    // Remove the subdoc (https://mongoosejs.com/docs/subdocs.html)
+    console.log(post)
+    post.comments.remove(req.params.id);
+    console.log(post)
+    // Save the updated book
+    await post.save();
+    // Redirect back to the book's show view
+    res.json(post)
+  }
+
+
+    
+    
+    
