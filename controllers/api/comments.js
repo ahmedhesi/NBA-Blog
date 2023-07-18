@@ -7,11 +7,11 @@ module.exports = {
 
 async function create(req, res) {
     console.log(req.body)
-    req.body.user=req.user._id
+    req.body.user=req.user
     console.log(req.params.id)
 
   try {
-    const post= await Post.findOne({_id:req.params.id})
+    const post= await Post.findOne({_id:req.params.id}).populate("user").populate("comments.user").exec()
     post.comments.push(req.body)
     await post.save()
     res.json(post)
@@ -25,7 +25,7 @@ async function create(req, res) {
   async function deleteComment(req, res) {
     console.log("hello")
     // Note the cool "dot" syntax to query on the property of a subdoc
-    const post = await Post.findOne({'comments._id': req.params.id, 'comments.userId': req.user._id});
+    const post = await Post.findOne({'comments._id': req.params.id, 'comments.userId': req.user._id}).populate("user").populate("comments.user").exec();
     if (!post) return
     // Remove the subdoc (https://mongoosejs.com/docs/subdocs.html)
     console.log(post)

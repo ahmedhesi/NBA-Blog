@@ -4,12 +4,13 @@ import * as commentsApi from "../../utilities/comments-api";
 import * as postApi from "../../utilities/posts-api";
 import Comment from "../../components/Comment/Comment";
 
-export default function PostDetail({ posts, setPosts }) {
+export default function PostDetail({ posts, setPosts, user }) {
+
   const [formData, setFormData] = useState({ content: "" });
   const [post, setPost] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [updatedPost, setUpdatedPost] = useState({
-    text: ""
+    content: ""
   });
   
   let { id } = useParams();
@@ -18,6 +19,7 @@ export default function PostDetail({ posts, setPosts }) {
     async function getDetails() {
       const post = await postApi.getPost(id);
       setPost(post);
+      setUpdatedPost({...updatedPost, text:post.content})
     }
     getDetails();
   }, [id]);
@@ -31,18 +33,19 @@ export default function PostDetail({ posts, setPosts }) {
     evt.preventDefault();
     const newcomment = await commentsApi.addComment(formData, id);
     setPost(newcomment);
+    const updatedPosts = posts.map(p=> p._id === newcomment._id? newcomment:p)
+    setPosts(updatedPosts)
     setFormData({ content: "" });
   }
   
   async function handleUpdatePost() {
-    await postApi.updatePost(id, updatedPost);
-    setPost(updatedPost);
+    const editPost = await postApi.updatePost(id, updatedPost);
+    const postsArr = posts.map(p=> p._id === editPost._id ? editPost : p)
+    setPosts(postsArr)
     setEditMode(false);
+    setPost(editPost);
   }
 
-  
-  console.log(post);
-  
   return (
     <>
       {editMode ? (
@@ -50,11 +53,12 @@ export default function PostDetail({ posts, setPosts }) {
           <p>Text:</p>
           <textarea
             size="sm"
-            value={updatedPost.text}
+            placeholder={`${post && post.content}`}
+            value={updatedPost.content}
             onChange={(evt) =>
-              setUpdatedPost({ ...updatedPost, text: evt.target.value })
+              setUpdatedPost({ ...updatedPost, content: evt.target.value })
             }
-          />
+          > {post && post.content}</textarea>
           <button onClick={handleUpdatePost}>Update</button>
           <button onClick={() => setEditMode(false)}>Cancel</button>
         </div>
@@ -64,7 +68,7 @@ export default function PostDetail({ posts, setPosts }) {
             <p>{post && post.content}</p>
             <p>{post && post.createdAt}</p>
             <p>{post && post.user.name}</p>
-            <button onClick={() => setEditMode(true)}>Edit</button>
+            {(user._id == (post && post.user._id)) && <button onClick={() => setEditMode(true)}>Edit</button>}
           </div>
           <form onSubmit={handleSubmit}>
             <input
@@ -81,6 +85,7 @@ export default function PostDetail({ posts, setPosts }) {
                 comment={comment}
                 setFormData={setFormData}
                 setPost={setPost}
+                user={user}
               />
             ))}
         </div>

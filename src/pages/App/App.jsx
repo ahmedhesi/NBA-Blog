@@ -25,7 +25,7 @@ export default function App() {
   function handleAddPost(post) {
       setPosts([...posts, post])
   }
-
+console.log(user)
   return (
     <main className="App">
       { user ?
@@ -36,7 +36,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/posts" element={<PostsPage user={user} posts={posts} handleAddPost={handleAddPost}  />} />
               <Route path="/posts/myblogs" element={<MyPostsPage user={user} posts={posts} handleAddPost={handleAddPost}  />} />
-              <Route path="/posts/:id" element={<PostDetail posts={posts} setPosts={setPosts} />} />
+              <Route path="/posts/:id" element={<PostDetail posts={posts} setPosts={setPosts} user={user}/>} />
             </Routes>
           </>
           :

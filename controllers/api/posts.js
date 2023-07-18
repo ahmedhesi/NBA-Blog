@@ -20,18 +20,18 @@ async function create(req, res) {
 }
 
 async function index(req, res) {
-    const posts = await Post.find({ }).populate("user").exec()
+    const posts = await Post.find({ }).populate("user").populate("comments.user").exec()
     res.json(posts)
 }
 async function getMyBlog(req, res) {
     console.log ("hello")
-    const posts = await Post.find({ user: req.user }).populate("user").exec()
+    const posts = await Post.find({ user: req.user }).populate("user").populate("comments.user").exec()
     res.json(posts)
 }
 
 async function show(req, res) {
     try {
-        const post= await Post.findOne({_id: req.params.id}).populate("user").exec()
+        const post= await Post.findOne({_id: req.params.id}).populate("user").populate("comments.user").exec()
         res.json(post)
     } catch (e) {
       console.log(e.message);
@@ -47,11 +47,11 @@ async function show(req, res) {
         req.body,
         // options object {new: true} returns updated doc
         {new: true}
-      );
-      return res.redirect(`/posts/${updatedPost._id}`);
+      ).populate("user").populate("comments.user").exec()
+      console.log(updatedPost)
+    res.json(updatedPost)
     } catch (e) {
       console.log(e.message);
-      return res.redirect('/posts');
     }
   }
 
